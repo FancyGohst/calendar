@@ -1,1 +1,29 @@
-
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <meta charset = "UTF-8">
+    <!--make sure it scale correctly on different devices--> 
+    <meta name = "viewport" content = "width=device-width,initial-scale = 1.0">
+    <link rel = "stylesheet" href = "./calendar.css">
+    <title>Calendar</title>
+  </head>
+  <body>
+    <div class = "wrap">
+      <!--control dates-->
+      <div class = "title">
+        <div class = "btn prev-month">▲</div>
+        <div class = "content">
+          <span class ="year">xxxx年</span>
+          <span class ="month">x</span>月
+        </div>
+        <div class = "btn prev-month">▼</div>
+      </div>
+      <!--weeks-->
+      <ul class="week-list">
+      </ul>
+      <ul class="day-list">
+      </ul>
+    </div>
+    <script src = "./calendar.js"></script>
+  </body>
+</html>

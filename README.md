@@ -1,4 +1,6 @@
 # calendar
 This is a calendar that has basic function and some cool styles using css.
 
-Needs to debug javascript section to allow next month and prev month work properly. 
+When user hovers on a certain date it glows up. 
+
+![image](https://github.com/user-attachments/assets/4540a85c-4d6c-4d8d-872b-132bfc599da2)

@@ -57,7 +57,7 @@
 }
 
 .next-month{
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 .title .btn:hover {
@@ -131,6 +131,7 @@
 
 .pas {
   color: #999;
+  opacity: 0.5;
 }
 
 .prev-month {

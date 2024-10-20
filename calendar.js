@@ -4,15 +4,17 @@ function $(ele) {
 
 let _Date = new Date();
 let dateYear = _Date.getFullYear();
-let dateMonth = _Date.getMonth() + 1;
+let dateMonth = _Date.getMonth() + 1; // Month is 1-indexed for display
 let dateDay = _Date.getDate();
-let dateWeek = _Date.getDay();
 let _year = $('.year');
 let _month = $('.month');
 
+let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+
 function setDate() {
-  _year.innerHTML = dateYear;
-  _month.innerHTML = dateMonth;
+  _year.innerHTML = `${dateYear}`;    
+  _month.innerHTML = `${monthNames[dateMonth - 1]}`;
 }
 
 let weekArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
@@ -26,13 +28,11 @@ function setWeekList() {
 }
 
 function startWeek() {
-  let startWeek = new Date(dateYear, dateMonth - 1, 1).getDay(); // Month is 0-indexed
-  return startWeek;
+  return new Date(dateYear, dateMonth - 1, 1).getDay(); // Month is 0-indexed
 }
 
 function allDate(year, month) {
-  let date = new Date(year, month, 0);
-  return date.getDate();
+  return new Date(year, month, 0).getDate(); // Get last date of the previous month
 }
 
 function setDateList() {
@@ -68,21 +68,8 @@ setDate();
 setWeekList();
 setDateList();
 
-function changeYear() {
-  setDateList();
-}
-
-function prevYear() {
-  dateYear--;
-  changeYear();
-}
-
-function nextYear() {
-  dateYear++;
-  changeYear();
-}
-
 function changeMonth() {
+  setDate();
   setDateList();
 }
 
@@ -90,7 +77,7 @@ function prevMonth() {
   dateMonth--;
   if (dateMonth < 1) {
     dateMonth = 12;
-    prevYear();
+    dateYear--;
   }
   changeMonth();
 }
@@ -99,17 +86,15 @@ function nextMonth() {
   dateMonth++;
   if (dateMonth > 12) {
     dateMonth = 1;
-    nextYear();
+    dateYear++;
   }
+  changeMonth();
 }
 
 let prevBtn = $('.prev-month');
 let nextBtn = $('.next-month');
 
-prevBtn.onclick = function () {
-  prevMonth();
-};
+prevBtn.onclick = prevMonth;
+nextBtn.onclick = nextMonth;
 
-nextBtn.onclick = function () {
-  nextMonth();
-};
+

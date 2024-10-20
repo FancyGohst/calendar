@@ -1,12 +1,12 @@
 function $(ele) {
-  return document.querySelector(ele)
+  return document.querySelector(ele);
 }
 
 let _Date = new Date();
 let dateYear = _Date.getFullYear();
 let dateMonth = _Date.getMonth() + 1;
 let dateDay = _Date.getDate();
-let dateWeek = _Date.getDay(); 
+let dateWeek = _Date.getDay();
 let _year = $('.year');
 let _month = $('.month');
 
@@ -15,24 +15,24 @@ function setDate() {
   _month.innerHTML = dateMonth;
 }
 
-let weekArr = ['Sun','Mon','Tue','Wed','Thr','Fri','Sat'];
+let weekArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
 let weekList = document.querySelector('.week-list');
+
 function setWeekList() {
-  weekList.innerHTML =''; 
+  weekList.innerHTML = '';
   for (let i = 0; i < weekArr.length; i++) {
     weekList.innerHTML += `<li>${weekArr[i]}</li>`;
   }
 }
 
 function startWeek() {
-  let_startWeek = new Date(dateYear + '-' + dateMonth).getDay();
-  return let_startWeek;
+  let startWeek = new Date(dateYear, dateMonth - 1, 1).getDay(); // Month is 0-indexed
+  return startWeek;
 }
 
-function allDate(dateYear, dateMonth) {
-  let date = new Date(dateYear, dateMonth, 0);
-  let _date = date.getDate()
-  return _date;
+function allDate(year, month) {
+  let date = new Date(year, month, 0);
+  return date.getDate();
 }
 
 function setDateList() {
@@ -42,83 +42,74 @@ function setDateList() {
   let dateList = $('.day-list');
   dateList.innerHTML = '';
 
-  for (let index = _week - 1; index >= 0; index--) {
-    dateList.innerHTML += `<li class = "pas">${prevDateLen - index}</li>`;
+  // Previous month days
+  for (let index = _week; index > 0; index--) {
+    dateList.innerHTML += `<li class="pas">${prevDateLen - index + 1}</li>`;
   }
 
-  let nowYear =_Date.getFullYear();
-  let nowMonth = _Date.getMonth() + 1;
-
+  // Current month days
   for (let index = 1; index <= _date; index++) {
     let li = `<li>${index}</li>`;
-
-    if(_year.innerHTML == nowYear && _month.innerHTML == nowMonth && index == dateDay) {
-
-      li = `<li class = "active">${index}</li>`;
+    if (_year.innerHTML == dateYear && _month.innerHTML == dateMonth && index == dateDay) {
+      li = `<li class="active">${index}</li>`;
     }
     dateList.innerHTML += li;
   }
 
-  let allLi = document.querySelectorAll('.day-listli');
-
-  for(let index = 1; index <= 42 - allLi.length; index++) {
-    dateList.innerHTML += `<li class ="pas">${index}</li>`;
+  // Next month days
+  let totalDays = 42; // Display 6 weeks
+  let allLi = document.querySelectorAll('.day-list li');
+  for (let index = 1; allLi.length + index <= totalDays; index++) {
+    dateList.innerHTML += `<li class="pas">${index}</li>`;
   }
-};
+}
 
 setDate();
 setWeekList();
-setDateList(); 
+setDateList();
 
 function changeYear() {
-  var _year = $('.year');
-  _year.innerHTML = dateYear;
-  setDateList()
+  setDateList();
 }
 
 function prevYear() {
   dateYear--;
-  changeYear()
+  changeYear();
 }
 
 function nextYear() {
   dateYear++;
-  changeYear()
+  changeYear();
 }
 
 function changeMonth() {
-  var _month = $('.month');
-  _month.innerHTML = dateMonth;
-  setDateList()
+  setDateList();
 }
 
 function prevMonth() {
   dateMonth--;
   if (dateMonth < 1) {
     dateMonth = 12;
-    prevYear()
+    prevYear();
   }
-  changeMonth()
+  changeMonth();
 }
 
 function nextMonth() {
   dateMonth++;
-  if( dateMonth > 12) {
+  if (dateMonth > 12) {
     dateMonth = 1;
-    nextYear()
+    nextYear();
   }
-  changeMonth()
 }
 
 let prevBtn = $('.prev-month');
 let nextBtn = $('.next-month');
 
 prevBtn.onclick = function () {
-  imgChange();
   prevMonth();
-}
+};
 
 nextBtn.onclick = function () {
-  imgChange();
   nextMonth();
-}
+};
